@@ -1,0 +1,457 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,300;0,400;0,600;0,700;0,800;0,900;1,300;1,400;1,900&display=swap');
+
+@import '_reset';
+
+$font-stack: 'Poppins', sans-serif;
+$paddingLeft : 4em;
+
+
+html, body {
+    width: 100%;
+    height: fit-content;
+}
+
+* {
+    font-family: $font-stack;
+}
+
+
+
+.wrapper {
+    width: 100%;
+    height: fit-content;
+    display: flex;
+}
+
+
+.aside {
+    position: sticky;
+    left: 0;
+    top: 0;
+    height: 100vh;
+    width: 40%;
+    z-index: 1;
+    .logo {
+        width: 100%;
+        height: 24.5%;
+        display: flex;
+        align-items: center;
+        padding-left: $paddingLeft;
+    }
+
+    &__background {
+        position: absolute;
+        left: 0;
+        top: 0;
+        height: 100%;
+        width: 100%;
+        object-fit: cover;
+        z-index: -100;
+       
+    }
+    &::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 0;
+        height: 100%;
+        width: 100%;
+        background: linear-gradient(180deg, rgba(0,0,0,0.5970763305322129) 80%, rgba(255,255,255,0.8) 100%);
+        z-index: -99;
+    }
+    
+}
+
+.header {
+    width: 93%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: #000;
+    padding: 5em 0 7em $paddingLeft;
+    z-index: 1;
+    &__title {
+        font-family: $font-stack;
+        font-weight: 700;
+        font-size: clamp(2rem, 10vw, 4rem); 
+        color: #FFF;
+    }
+    &__subtitle {
+        position: relative;
+        font-family: $font-stack;
+        font-weight: 700;
+        font-size: clamp(1.05em, 2em, 4em);
+        padding-right: 0.2em;
+        color: #FFF;
+
+        &::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -1em;
+            width: 30%;
+            height: 2px;
+            background-color: #FFF;
+        }
+    }
+    
+
+}
+
+.section {
+    display: flex;
+    padding-top: 10em;
+    padding: 2em;
+    flex-direction: column;
+    gap: 2em;
+
+    &__title {
+        font-size: clamp(1rem, 1.5vw, 3rem);
+        font-weight: 500; 
+    }
+
+    &--active {
+        display: flex;
+    }
+    &--inactive {
+        display: none;
+    }
+}
+
+.wrapper__content {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width:60%;
+    min-height: calc(100vh - 5em);
+}
+
+.options {
+    
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(14em, 48%), 1fr));
+    
+    &--image {
+        grid-template-columns: repeat(auto-fill, minmax(min(20em, 100%), 1fr));
+    }
+    
+    gap: 0.5em;
+    
+}
+
+.card {
+    position: relative;
+    height: 12em;
+    background-color: #FFF;
+    border-radius: 10px;
+    box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1em;
+    padding: 0 1em 0 1em;
+    transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+    border-radius: 5px;
+    backface-visibility: hidden;
+    cursor: pointer;
+
+    &--imageOption {
+        transition: scale 0.2s ease-in;
+        height: auto;
+        scale: 1;
+        padding: 0;
+        &:hover {
+            scale: 1.125;
+            z-index: 5;
+        }
+    }
+
+    &__image {
+        &--cover{
+            width: 100%;
+            height: auto;
+            object-fit: contain;
+        }
+    }
+
+    &__text {
+        width: fit-content;
+        font-weight: 500;
+    }
+
+    &:hover {
+        background-color: rgba(231, 231, 231, 0.516);
+        color: #000;
+    }
+
+    &__input {
+        position: absolute;
+        display: block;
+        outline: none;
+        border: none;
+        background: none;
+        padding: 0;
+        margin: 0;
+        -webkit-appearance: none;
+        width: 100%;
+        height: 100%;
+        z-index: 1;
+        border-radius: 5px;
+
+        &:checked {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: rgba(179, 179, 179, 0.668);
+            
+            border: 2px solid rgb(65, 65, 65);
+
+            &::after {
+                transition: all 1s linear;
+                position: absolute;
+                content: '';
+                width: 4em;
+                height: 4em;
+                background-image: url('../../image/icon/selected--black.png');
+                background-size: 2em;
+                background-repeat: no-repeat;
+                background-position: center center;
+                animation: firework 0.2s cubic-bezier(.98,.05,.96,.46) forwards;
+            }
+        }
+
+        &[type="radio"]:checked  {
+            justify-content: center;
+            align-items: center;
+        }
+
+    }
+
+
+}
+
+.actions {
+    margin-top: auto;
+    background-color: transparent;
+    width: 100%;
+    height: 5em;
+    display: flex;
+    justify-content: space-between;
+    padding: 1em;
+    z-index: 100;
+
+    * {
+        padding: 0.5em 1em 0.5em 1em;
+        background-color: #000;
+        color: #FFF;
+        width: 10em; 
+        text-transform: uppercase;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.2em;
+        cursor: pointer;
+    }
+    &__back {
+        background-color: rgba(0, 0, 0, 0.316);
+        backdrop-filter: blur(5px);
+
+        &--active {
+            display: block;
+        }
+        &--inactive {
+            display: none;
+        }
+    }
+    &__forward {
+        &--active {
+            display: block;
+        }
+        &--inactive {
+            display: none;
+        }
+
+    }
+}
+
+.form {
+    &__title {
+        font-size: 1.2em;
+        font-weight: 600;
+    }
+
+    &__list {
+        display: flex;
+        flex-direction: column;
+        gap: 1em;
+
+        .field {
+            width: 100%;
+
+            // .field__log {
+            //     display: none;
+            //     position: relative;
+            //     color: red;
+            //     padding-left: 0.6em;
+                
+            //     &::before {
+            //         position: absolute;
+            //         content: "*";
+            //         left: 0;
+            //     }
+            //     --inactive {
+            //         display: none;
+            //     }
+            //     --active {
+            //         display: block;
+            //     }
+            // }
+
+            &__input {
+                width: 100%;
+                font-size: 1.2em;
+                padding: 0.2em 0.2em 0.2em 0;
+                border-bottom: 1px solid black;
+            }
+        }
+    }
+}
+
+.field {
+    width: 100%;
+
+    &--fitContent { width: fit-content;}
+
+    &__input {
+        &[type=text], &[type=email], &[type=number] {
+            width: 100%;
+            font-size: 1.2em;
+            padding: 0.2em 0.2em 0.2em 0;
+            border-bottom: 1px solid black;
+        }
+
+
+        &[type=file]::file-selector-button {
+            width: fit-content;
+            border: none;
+            background: #000;
+            padding: 10px 20px;
+            border-radius: 10px;
+            color: #fff;
+            cursor: pointer;
+            transition: background .2s ease-in-out;
+          }
+          
+        &[type=file]::file-selector-button:hover {
+            background: gray;
+          }
+    }
+
+    &__select {
+        width: 100%;
+        padding: 0.8em;
+        background-color: #FFF;
+        box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+
+        
+    }
+}
+
+.form__controls > * { display: block;}
+
+.component {
+    width: 100%;
+    height: max-content;
+    display: flex;
+    gap: 2em;
+    flex-direction: column;
+    justify-content: center;
+    padding: 2em;
+}
+
+.submitdata {
+    width: 10em;
+    height: 5em;
+    cursor: pointer;
+}
+
+@keyframes firework {
+    
+    0% {
+        transform: translateY(20px);
+        scale: 0;
+    }
+    100% {
+      opacity: 1;
+      scale: 1;
+      transform: initial;
+
+    }
+}
+
+@media only screen and (max-width: 1000px) {
+    .wrapper {
+        flex-direction: column;
+        padding: 0 1em 1em 1em;
+    }
+    .aside {
+        width: 100%;
+        height: fit-content;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        .logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.5em;
+            border: 1px solid black;
+            justify-content: center;
+            &__image {
+                width: auto;
+                filter: invert(1);
+            }
+        }
+        &__background {
+            display: none;
+        }
+        &::after {
+            background: none;
+        }
+    }
+    .section {
+        padding: 1em;
+    }
+    .header {
+        width: 100%;
+        padding: 1em;
+        justify-content: center;
+        &__title {
+            font-size: 1.6em;
+            font-weight: 600;
+        }
+        &__subtitle{
+            font-size: 1.2em;
+            font-weight: 500;
+
+        }
+        
+    }
+    .wrapper__content {
+        width: 100%;
+    }
+    .actions {
+        flex-wrap: wrap;
+        gap: 4%;
+        > * {
+            width: 48%;
+            min-width: 4em;
+        }
+    }
+}
+
+
