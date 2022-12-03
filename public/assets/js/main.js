@@ -32,6 +32,10 @@ let steps2 = [
     },
     {
         current: 'email', 
+        next: 'styleResult'
+    },
+    {
+        current: 'styleResult', 
         next: 'assistance'
     },
     {
