@@ -204,7 +204,7 @@ html, body {
 }
 .card--imageOption:hover {
   scale: 1.125;
-  z-index: 5;
+  z-index: 4;
 }
 .card__image--cover {
   width: 100%;
@@ -255,6 +255,9 @@ html, body {
 .card__input[type=radio]:checked {
   justify-content: center;
   align-items: center;
+}
+.card.flow-choice {
+  user-select: none;
 }
 
 .actions {

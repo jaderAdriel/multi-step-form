@@ -82,10 +82,11 @@ function nextSection(nextSectionID, ...props) {
     const current = document.getElementById(nextSectionID);
     currentSection = current;
 
+    if (nextSectionID === 'initial') clearForms();
+
     changeTitle(currentSection);
 
     const [isComingBack] = props;
-
     if (! isComingBack === true) {
         sectionFlow.push(previous.id);
     }
@@ -100,9 +101,13 @@ function nextSection(nextSectionID, ...props) {
         old: "section--inactive",
         new: "section--active"
     });
-    console.log(previous.getAttribute("data-submit"))
+    
     if (previous.getAttribute("data-submit") === "true") {
-        const formId = sectionFlow[1][0];
+        const formId = '1'
+        if( !validateData(document.getElementById(formId))) {
+            alert("voce esqueceu de algum ")
+            throw new Error('Ops!, vc esqueceu algum campo');
+        }
         formData = clearData(formId);
         sendEmail(formData);
     }
@@ -120,12 +125,18 @@ function changeState(section, state) {
 
 
 function clearData(formId) {
-    const form = document.getElementById(formId),
-    inputs = Array.from(form.querySelectorAll('input:not(.option), .option:checked'));
+    
+    const form = document.getElementById(formId);
+    let inputs = Array.from(form.querySelectorAll('input:not(.option), .option:checked'));
 
     let data = inputs.reduce((acc, e) => {
-        let name = e.getAttribute('name');
-        let value = e.getAttribute('value') || e.value;
+        const name = e.getAttribute('name'),
+        type = e.getAttribute('type');
+        let value = e.getAttribute('value');
+        
+        const selectTypes = ['checkbox', 'radio'];
+
+        if (selectTypes.includes(type)) value = true;
 
         if(acc[name]) {
             let previousValue = acc[name];
@@ -136,8 +147,7 @@ function clearData(formId) {
                 acc[name] = [previousValue, value];
             }
             return acc
-        } 
-
+        }
 
         acc[name] = value;
 
@@ -145,7 +155,32 @@ function clearData(formId) {
 
     }, {})
 
-    return data;
+    console.log(JSON.stringify(data))
+    console.log(data)
+
+    return inputs;
+}
+
+
+function clearForms() {
+    let forms = Array.from(document.forms);
+    forms.forEach((form) => {
+        let inputs = form.querySelectorAll('input');
+
+        for (let i = 0; i < inputs.length; i++) {
+
+            const value  = inputs[i].value,
+            type = inputs[i].getAttribute('type');
+
+            if (! (type === "checkbox" || type === "radio") ){
+                inputs[i].value = '';
+            }
+            
+            if (type === "checkbox" || type === "radio") {
+                inputs[i].checked = false;
+            }
+        }
+    })
 }
 
 

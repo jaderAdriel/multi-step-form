@@ -12,6 +12,7 @@
     <!-- Links para script -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
     <script src="./assets/js/main.js" defer></script>
+    <script src="./assets/js/flow.js" defer></script>
 
 </head>
 <body>
@@ -85,7 +86,7 @@
                             >
                         </li>
                         <li class="field">
-                            <input name="agreeTerms" type="checkbox" id="terms" required="true" aria-required="true" value="true">
+                            <input name="agreeTerms" type="checkbox" id="terms" required="true" aria-required="true">
                             <label for="terms" class="field__label">Aceito os <a href="https://www.criare.com/politica-de-privacidade" target="_blank" rel="noopener noreferrer">termos de uso e política de privacidade</a>
                             </label>
                         </li>
@@ -412,53 +413,6 @@
 
                     </div>
                 </fieldset>
-
-                <fieldset id="2.name" class="section section--inactive form"
-                data-title="Falta pouco para descobrir o estilo que mais combina com seu projeto."
-                data-next-section="2.info">
-                    <h2 class="form__title">Para começar, vamos descobrir o estilo do seu projeto?</h2>
-                    <ul class="form__list">
-                        <li class="field">
-                            <label for="" class="field__label"></label>
-                            <input
-                                type="text"
-                                name="userName"
-                                id="userName"
-                                placeholder="Insira seu nome"
-                                class="field__input"
-                                required="true"
-                                aria-required="true"  
-                            > <!-- aria-required="true"  é para letitores de telas-->
-                        </li>
-                    </ul>
-                </fieldset>
-
-                <fieldset id="2.info" class="section section--inactive form"
-                    data-title="Conseguimos encontrar o estilo de decoração ideal para seu projeto."
-                    data-next-section="1.assistance"
-                    >
-                    <h2 class="form__title">Qual e-mail devemos enviar o resultado?</h2>
-                    <ul class="form__list">
-                        <li class="field">
-                            <input
-                                type="text"
-                                name="userEmail"
-                                id="userEmail"
-                                placeholder="Para qual e-mail devemos enviar o resultado?​"
-                                pattern="/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/."
-                                class="field__input"
-                                required="true"
-                                aria-required="true" 
-                            >
-                        </li>
-                        <li class="field">
-                            <input name="agreeTerms" type="checkbox" id="terms" required="true" aria-required="true" value="true" >
-                            <label for="terms" class="field__label">Aceito os <a href="https://www.criare.com/politica-de-privacidade" target="_blank" rel="noopener noreferrer">termos de uso e política de privacidade</a>
-                            </label>
-                        </li>
-                    </ul>
-                </fieldset>
-
             </form>
 
             <section id="submit" class="section section--inactive">
