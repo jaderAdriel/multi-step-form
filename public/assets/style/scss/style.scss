@@ -133,7 +133,7 @@ html, body {
     grid-template-columns: repeat(auto-fit, minmax(min(14em, 48%), 1fr));
     
     &--image {
-        grid-template-columns: repeat(auto-fill, minmax(min(20em, 100%), 1fr));
+        grid-template-columns: repeat(auto-fill, minmax(min(14em, 100%), 1fr));
     }
     
     gap: 0.5em;
@@ -200,7 +200,7 @@ html, body {
         z-index: 1;
         border-radius: 5px;
 
-        &:checked {
+        &:not(.choice__input):checked {
             display: flex;
             justify-content: center;
             align-items: center;
@@ -229,7 +229,7 @@ html, body {
 
     }
 
-    &.flow-choice {user-select: none;}
+    &.choice {user-select: none;}
 }
 
 .actions {
@@ -289,25 +289,6 @@ html, body {
 
         .field {
             width: 100%;
-
-            // .field__log {
-            //     display: none;
-            //     position: relative;
-            //     color: red;
-            //     padding-left: 0.6em;
-                
-            //     &::before {
-            //         position: absolute;
-            //         content: "*";
-            //         left: 0;
-            //     }
-            //     --inactive {
-            //         display: none;
-            //     }
-            //     --active {
-            //         display: block;
-            //     }
-            // }
 
             &__input {
                 width: 100%;
@@ -455,3 +436,8 @@ html, body {
 }
 
 
+@media only screen and (min-width: 1000px) {
+    .wrapper__content {
+        padding: 4em;
+    }
+}

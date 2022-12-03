@@ -2,6 +2,7 @@ let sectionFlow = [];
 let currentSection = document.getElementById('initial');
 
 const initialSubtitle = document.querySelector('.header__subtitle').innerText;
+
 const keyframeShake = [
     { transform: 'skewY(-4deg)'},
     { transform: 'skewY(4deg)'},
@@ -9,22 +10,148 @@ const keyframeShake = [
     { transform: 'skewY(4deg)'},
     { transform: 'skewY(0)'  },
     { transform: 'skewY(0)'  }
-], shakeTiming = {
+];
+
+const shakeTiming = {
     duration: 350,
     iterations: 1,
 }
 
-const options = document.querySelectorAll('.options .card.flow-choice');
+let steps2 = [
+    {
+        current: 'style',
+        next: 'artisticMovements'
+    },
+    {
+        current: 'artisticMovements', 
+        next: 'name'
+    },
+    {
+        current: 'name', 
+        next: 'email'
+    },
+    {
+        current: 'email', 
+        next: 'assistance'
+    },
+    {
+        current: 'assistance: no', 
+        next: 'deadlines'
+    },
+    {
+        current: 'assistance: yes', 
+        next: 'places'
+    },
+    {
+        current: 'deadlines', 
+        next: 'places'
+    },
+    {
+        current: 'places', 
+        next: 'file'
+    },
+    {
+        current: 'file', 
+        next: 'number'
+    },
+    {
+        current: 'number', 
+        next: 'availableBudget'
+    },
+    {
+        current: 'availableBudget', 
+        next: 'furnitureBuyingEvent'
+    },
+    {
+        current: 'buyed: no', 
+        next: 'findStore'
+    },
+    {
+        current: 'buyed: yes', 
+        next: 'findStore'
+    }
+];
+
+let steps1 = [
+    {
+        current: 'budget',
+        next: 'name'
+    },
+    {
+        current: 'name', 
+        next: 'email'
+    },
+    {
+        current: 'email', 
+        next: 'assistance'
+    },
+    {
+        current: 'assistance: no', 
+        next: 'deadlines'
+    },
+    {
+        current: 'assistance: yes', 
+        next: 'places'
+    },
+    {
+        current: 'deadlines', 
+        next: 'places'
+    },
+    {
+        current: 'places', 
+        next: 'file'
+    },
+    {
+        current: 'file', 
+        next: 'number'
+    },
+    {
+        current: 'number', 
+        next: 'availableBudget'
+    },
+    {
+        current: 'availableBudget', 
+        next: 'furnitureBuyingEvent'
+    },
+    {
+        current: 'buyed: no', 
+        next: 'findStore'
+    },
+    {
+        current: 'buyed: yes', 
+        next: 'findStore'
+    }
+];
+
+const stepsMap1 = new Map(steps1.map(i => [i.current, i.next]));
+
+const stepsMap2 = new Map(steps2.map(i => [i.current, i.next]));
+
+const flowMap = new Map([['budget', stepsMap1], ['style', stepsMap2]]);
+
+const flowChoice = document.querySelectorAll('.options .choice');
+
+let flow;
+
 const [back, forward] = document.querySelectorAll('.actions > button');
 
 
 main()
 
-
-options.forEach((element) => {
+flowChoice.forEach((element) => {
     element.addEventListener('click', (e) => {
-        let nextSectionID = element.getAttribute('data-next-section');
-        nextSection(nextSectionID);
+        let id;
+
+        let input = element.querySelector('.choice__input');
+
+        if (element.classList.contains('flow-choice')){
+            flow = input.value;
+            step = input.value;
+        } else {
+            step = input.getAttribute('data-next-step-key')
+        }
+        id = flowMap.get(flow).get(step);
+        nextSection(id);
     })
 });
 
@@ -45,14 +172,16 @@ forward.addEventListener('click', () => {
         return 
     };
     
-    let nextSectionID = currentSection.getAttribute('data-next-section');
+
+    let nextSectionID = flowMap.get(flow).get(currentSection.id);
 
     if (nextSectionID) {
-        nextSection(nextSectionID)
+        nextSection(nextSectionID);
     }
 
     
 })
+
 
 
 function main() {
@@ -79,8 +208,7 @@ function sendEmail(data) {
 function nextSection(nextSectionID, ...props) {
 
     const previous = document.querySelector('.section--active');
-    const current = document.getElementById(nextSectionID);
-    currentSection = current;
+    currentSection = document.getElementById(nextSectionID);
 
     if (nextSectionID === 'initial') clearForms();
 
@@ -97,17 +225,14 @@ function nextSection(nextSectionID, ...props) {
         new: "section--inactive",
         old: "section--active"
     });
-    changeState(current, {
+
+    changeState(currentSection, {
         old: "section--inactive",
         new: "section--active"
     });
     
     if (previous.getAttribute("data-submit") === "true") {
         const formId = '1'
-        if( !validateData(document.getElementById(formId))) {
-            alert("voce esqueceu de algum ")
-            throw new Error('Ops!, vc esqueceu algum campo');
-        }
         formData = clearData(formId);
         sendEmail(formData);
     }
@@ -120,25 +245,24 @@ function changeState(section, state) {
         return
     } 
     section.classList.add(state.new);
-    
 }
 
 
 function clearData(formId) {
     
     const form = document.getElementById(formId);
-    let inputs = Array.from(form.querySelectorAll('input:not(.option), .option:checked'));
+    let inputs = Array.from(form.querySelectorAll('input'));
 
     let data = inputs.reduce((acc, e) => {
-        const name = e.getAttribute('name'),
-        type = e.getAttribute('type');
-        let value = e.getAttribute('value');
+
+        const name = e.name
+        const type = e.type;
+        let value = e.value;
         
-        const selectTypes = ['checkbox', 'radio'];
+        
+        if ((type === 'checkbox' || type === 'radio' ) && !e.checked) return acc;
 
-        if (selectTypes.includes(type)) value = true;
-
-        if(acc[name]) {
+        if(name in acc) {
             let previousValue = acc[name];
 
             if ( Array.isArray(previousValue) ) {
@@ -155,10 +279,7 @@ function clearData(formId) {
 
     }, {})
 
-    console.log(JSON.stringify(data))
-    console.log(data)
-
-    return inputs;
+    return data;
 }
 
 
@@ -265,17 +386,26 @@ function validateField(value, ...options) {
 
 
 function checkActionsVisibility(section) {
-    if (!section.getAttribute('data-next-section')) {
+    // console.log(section, flowMap, flow)
+    try {
+        if (!flowMap.get(flow).get(section.id)) {
+            changeState(forward, {
+                new: "actions__forward--inactive",
+                old: "actions__forward--active"
+            });
+        } else {
+            changeState(forward, {
+                old: "actions__forward--inactive",
+                new: "actions__forward--active"
+            });
+        }
+    } catch (error) {
         changeState(forward, {
             new: "actions__forward--inactive",
             old: "actions__forward--active"
         });
-    } else {
-        changeState(forward, {
-            old: "actions__forward--inactive",
-            new: "actions__forward--active"
-        });
     }
+    
 
     if (sectionFlow.length < 1) {
         changeState(back, {
@@ -289,6 +419,7 @@ function checkActionsVisibility(section) {
         });
     }
 }
+
 
 function changeTitle(section) {
     let title = section.getAttribute('data-title') || initialSubtitle;

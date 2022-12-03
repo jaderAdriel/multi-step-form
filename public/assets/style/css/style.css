@@ -176,7 +176,7 @@ html, body {
   gap: 0.5em;
 }
 .options--image {
-  grid-template-columns: repeat(auto-fill, minmax(min(20em, 100%), 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(14em, 100%), 1fr));
 }
 
 .card {
@@ -233,14 +233,14 @@ html, body {
   z-index: 1;
   border-radius: 5px;
 }
-.card__input:checked {
+.card__input:not(.choice__input):checked {
   display: flex;
   justify-content: center;
   align-items: center;
   background-color: rgba(179, 179, 179, 0.668);
   border: 2px solid rgb(65, 65, 65);
 }
-.card__input:checked::after {
+.card__input:not(.choice__input):checked::after {
   transition: all 1s linear;
   position: absolute;
   content: "";
@@ -256,7 +256,7 @@ html, body {
   justify-content: center;
   align-items: center;
 }
-.card.flow-choice {
+.card.choice {
   user-select: none;
 }
 
@@ -439,6 +439,11 @@ html, body {
   .actions > * {
     width: 48%;
     min-width: 4em;
+  }
+}
+@media only screen and (min-width: 1000px) {
+  .wrapper__content {
+    padding: 4em;
   }
 }
 

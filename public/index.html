@@ -12,7 +12,6 @@
     <!-- Links para script -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
     <script src="./assets/js/main.js" defer></script>
-    <script src="./assets/js/flow.js" defer></script>
 
 </head>
 <body>
@@ -35,23 +34,36 @@
             <section id='initial' class="section section--active">
                 <h2 class="section__title">Para começar, vamos descobrir o estilo do seu projeto?</h2>
                 <div class="options">
-                    <button  type="button" class="card flow-choice" data-next-section="1.name">
+                    <button  type="button" class="card flow-choice choice">
+                        <input 
+                            name="interest" 
+                            id="interest: budget" type="radio" 
+                            class="card__input choice__input" 
+                            value="budget"
+                        >
                         <img src="assets/image/icon/01.png" alt="img" class="card__image">
-                        <div class="card__text">Quero apenas fazer um orçamento</div>
+                        <label for="interest: budget" class="card__text">Quero apenas fazer um orçamento</label>
                     </button>
 
-                    <button  type="button" class="card flow-choice" data-next-section="2.artisticMovements">
+                    <button  type="button" class="card flow-choice choice">
+                        <input 
+                            name="interest" 
+                            id="interest: style" type="radio" 
+                            class="card__input choice__input" 
+                            value="style"
+                        >
                         <img src="assets/image/icon/02.png" alt="img" class="card__image">
-                        <span class="card__text">Sim, quero saber</span>
+                        <label for="interest: style" class="card__text">Sim, quero saber</label>
                     </button>
                 </div>
             </section>
 
-            <form id="1" method="POST" action="localhost:8000" >
+            <form id="1" method="POST" action="." >
 
-                <fieldset id="1.name" class="section section--inactive form"
+                <fieldset id="name" class="section section--inactive form"
                 data-title="Falta pouco para descobrir o estilo que mais combina com seu projeto."
-                data-next-section="1.email">
+                >
+            
                     <h2 class="form__title">Para começar, vamos descobrir o estilo do seu projeto?</h2>
                     <div class="field">
                         <label for="" class="field__label"></label>
@@ -67,9 +79,8 @@
                     </div>
                 </fieldset>
 
-                <fieldset id="1.email" class="section section--inactive form"
+                <fieldset id="email" class="section section--inactive form"
                     data-title="Conseguimos encontrar o estilo de decoração ideal para seu projeto."
-                    data-next-section="1.assistance"
                     >
                     <h2 class="form__title">Qual e-mail devemos enviar o resultado?</h2>
                     <ul class="form__list">
@@ -86,36 +97,51 @@
                             >
                         </li>
                         <li class="field">
-                            <input name="agreeTerms" type="checkbox" id="terms" required="true" aria-required="true">
+                            <input name="agreeTerms" type="checkbox" id="terms" required="true" aria-required="true" value="true">
                             <label for="terms" class="field__label">Aceito os <a href="https://www.criare.com/politica-de-privacidade" target="_blank" rel="noopener noreferrer">termos de uso e política de privacidade</a>
                             </label>
                         </li>
                     </ul>
                 </fieldset>
 
-                <section id="1.assistance" class="section section--inactive"
+                <section id="assistance" class="section section--inactive"
                 data-title="O estilo você já achou. Vamos aos próximos passos.">
-                    <h2 class="section__title">Para começar, vamos descobrir o estilo do seu projeto?</h2>
+
+                    <h2 class="section__title">Tem algum profissional de arquitetura ou design de interior fazendo o seu projeto?</h2>
+
                     <div class="options">
-                        <button  type="button" class="card flow-choice" data-next-section="1.deadlines">
+                        <button  type="button" class="card choice step-choice">
+                           <input 
+                                name="assistance" 
+                                id="assistance: no" type="radio" 
+                                class="card__input choice__input" 
+                                value="false"
+                                data-next-step-key="assistance: no"
+                            >
                             <img src="assets/image/icon/03.png" alt="img" class="card__image">
-                            <div class="card__text">Não tenho alguem me auxiliando</div>
+                            <label for="assistance: no" class="card__text">Não tenho alguem me auxiliando</label>
                         </button>
 
-                        <button  type="button" class="card flow-choice" data-next-section="1.places">
+                        <button  type="button" class="card choice step-choice">
+                            <input 
+                                name="assistance" 
+                                id="assistance: yes" type="radio" 
+                                class="card__input choice__input" 
+                                value="true"
+                                data-next-step-key="assistance: yes"
+                            >
                             <img src="assets/image/icon/04.png" alt="img" class="card__image">
-                            <span class="card__text">Sim, tenho alguem me auxiliando</span>
+                            <label for="assistance: yes" class="card__text">Sim, tenho alguem me auxiliando</label>
                         </button>
                     </div>
                 </section>
 
-                <fieldset id="1.deadlines" class="section section--inactive form"
-                data-next-section ="1.places"
+                <fieldset id="deadlines" class="section section--inactive form"
                 data-title="Você pode contar com a nossa equipe de projetistas para desenvolver o seu projeto.">
+
                     <h2 class="section__title">Agora conte para a gente: para quando você deseja ter seu móveis instalados no seu ambiente?</h2>
                     <div class="options" data-required="true">
                         <button  type="button" class="card">
-                            <!-- Apenas o primeiro radio é necessario atribuir o required -->
                             <input name="deadline" id="imediatamente" type="radio" class="card__input option" value="imediatamente">
                             <img src="assets/image/icon/icone-imediatamente.png" alt="img" class="card__image">
                             <label for="imediatamente" class="card__text">Imediato<label>
@@ -147,7 +173,7 @@
                     </div>
                 </fieldset>
 
-                <fieldset id="1.places" class="section section--inactive form"
+                <fieldset id="places" class="section section--inactive form"
                 data-next-section ="1.file"
                 data-title="Quais cômodos você está planejando adquirir?">
                     <h2 class="section__title">Você pode selecionar mais de uma opção.</h2>
@@ -206,9 +232,8 @@
                     </div>
                 </fieldset>
 
-                <fieldset id="1.file" class="section section--inactive form"
+                <fieldset id="file" class="section section--inactive form"
                     data-title="Se desejar, você pode nos enviar a planta do seu cômodo"
-                    data-next-section="1.number"
                     >
                     <h2 class="form__title"></h2>
                     <div class="component">
@@ -232,9 +257,8 @@
 
                 </fieldset>
 
-                <fieldset id="1.number" class="section section--inactive form"
+                <fieldset id="number" class="section section--inactive form"
                 data-title="Vamos encontrar um especialista para te ajudar.."
-                data-next-section="1.availableBudget"
                 >
                 <!-- <h2 class="form__title"></h2> -->
                 <div class="field">
@@ -250,10 +274,10 @@
                 </div>
                 </fieldset>
 
-                <fieldset id="1.availableBudget" class="section section--inactive form"
-                data-next-section="1.furnitureBuyingEvent" 
+                <fieldset id="availableBudget" class="section section--inactive form"
                 data-submit="true"
                 data-title="Qual valor máximo você tem disponível para realizar seu projeto?">
+
                     <h2 class="section__title">Você pode selecionar apenas uma opção de quanto pretende investir.</h2>
 
                     <div class="options" data-required="true">
@@ -287,26 +311,44 @@
                     </div>
                 </fieldset>
 
-                <section id="1.furnitureBuyingEvent" class="section section--inactive"
+                <section id="furnitureBuyingEvent" class="section section--inactive"
                 data-title="Você já comprou alguma vez móveis planejados antes?">
+
                     <h2 class="section__title">Selecione a sua resposta.</h2>
                     <div class="options">
-                        <button  type="button" class="card flow-choice" data-next-section="1.findStore">
+                        <button  type="button" class="card choice" data-next-section="1.findStore">
+                            <input 
+                                name="have buyed a house? "
+                                id="buyed: yes"
+                                type="radio" 
+                                class="card__input option" 
+                                value="true"
+                                data-next-step-key="buyed: yes"
+                            >
+
                             <img src="assets/image/icon/22.png" alt="img" class="card__image">
-                            <div class="card__text">Não tenho alguem me auxiliando</div>
+                            <label for="buyed: yes" class="card__text">Não, é a 1 compra de móveis planejados</label>
                         </button>
 
-                        <button  type="button" class="card flow-choice" data-next-section="1.findStore">
+                        <button  type="button" class="card choice step-choice" data-next-section="1.findStore">
+                            <input 
+                                name="have buyed a house? "
+                                id="buyed: no"
+                                type="radio" 
+                                class="card__input choice__input" 
+                                value="false"
+                                data-next-step-key="buyed: no"
+                            >
                             <img src="assets/image/icon/21.png" alt="img" class="card__image">
-                            <span class="card__text">Sim, tenho alguem me auxiliando</span>
+                            <label for="buyed: no" class="card__text">Sim, já comprei móveis planejados</label>
                         </button>
                     </div>
                 </section>
 
-                <fieldset id="1.findStore" class="section section--inactive form"
+                <fieldset id="findStore" class="section section--inactive form"
                     data-title="Entre em contato com uma das lojas Criare agora mesmo."
-                    data-next-section="submit"
                     >
+
                     <h2 class="form__title">Qual e-mail devemos enviar o resultado?</h2>
                     <ul class="form__list">
                         <li class="field">
@@ -334,7 +376,7 @@
                     </ul>
                 </fieldset>
             
-                <fieldset id="2.artisticMovements" class="section section--inactive form"
+                <fieldset id="artisticMovements" class="section section--inactive form"
                 data-next-section ="2.name">
                     <h2 class="section__title">Marque até 5 ambientes!</h2>
                     <div class="options options--image" data-required="true">
