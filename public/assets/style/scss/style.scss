@@ -280,9 +280,27 @@ html, body {
         height: auto;
         scale: 1;
         padding: 0;
+        
+        
         &:hover {
-            scale: 1.125;
             z-index: 4;
+            filter: grayscale(0);
+            
+        }
+        
+        .card__image--cover {
+            transition: filter 0.2s linear;
+            filter: grayscale(0);
+        }
+
+        .card__input:not(.choice__input):checked + .card__image--cover {
+            filter: grayscale(70%);
+        }
+
+        .card__input:not(.choice__input):checked {
+            background-color: rgba(0, 0, 0, 0.301);
+            border: none;
+            &::after { filter: invert(1);}
         }
     }
 

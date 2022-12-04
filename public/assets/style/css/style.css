@@ -300,8 +300,22 @@ html, body {
   padding: 0;
 }
 .card--imageOption:hover {
-  scale: 1.125;
   z-index: 4;
+  filter: grayscale(0);
+}
+.card--imageOption .card__image--cover {
+  transition: filter 0.2s linear;
+  filter: grayscale(0);
+}
+.card--imageOption .card__input:not(.choice__input):checked + .card__image--cover {
+  filter: grayscale(70%);
+}
+.card--imageOption .card__input:not(.choice__input):checked {
+  background-color: rgba(0, 0, 0, 0.301);
+  border: none;
+}
+.card--imageOption .card__input:not(.choice__input):checked::after {
+  filter: invert(1);
 }
 .card__image--cover {
   width: 100%;

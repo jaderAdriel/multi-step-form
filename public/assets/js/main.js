@@ -22,16 +22,20 @@ let steps2 = [
         current: 'style',
         next: 'artisticMovements'
     },
-    {
-        current: 'artisticMovements', 
-        next: 'name'
-    },
+    // {
+    //     current: 'artisticMovements', 
+    //     next: 'name'
+    // },
     {
         current: 'name', 
         next: 'email'
     },
+    // {
+    //     current: 'email', 
+    //     next: 'styleResult'
+    // },
     {
-        current: 'email', 
+        current: 'artisticMovements', 
         next: 'styleResult'
     },
     {
@@ -127,8 +131,17 @@ let steps1 = [
     }
 ];
 
-const stepsMap1 = new Map(steps1.map(i => [i.current, i.next]));
+let moviment = [
+    {
+       name:  'contemporaneo', description: 'Contemporâneo – Inovador e atemporal. O estilo contemporâneo é inovador, pois combina texturas, cores e bastante tecnologia em um só ambiente. Atemporal, ele evolui conforme o tempo e pode incorporar elementos modernos, usando materiais de última geração, como metais e vidros. A partir da década de 1990, a decoração contemporânea seguiu à tendência minimalista, incluindo cores contrastantes ao lado do preto e branco, proporcionando grande destaque e ousadia. Atualmente, um ambiente contemporâneo é composto por móveis de linhas retas e amplas, abrindo espaço também para peças com design arrojado e que imprimem aos espaços mais personalidade, com formas geométricas orgânicas que quebram a frieza dos elementos lisos predominantes. Nas cores base predominam tons neutros, como preto, branco, cinza, marrom e tonalidades pastéis – que dão visibilidade e sofisticação ao restante da decoração, que permite cores vibrantes, desde que sua utilização seja agradável e harmônica. A automação de ambientes e a utilização de espelhos para dar a sensação de amplitude têm se tornado cada vez mais comum no estilo.'
+    }, 
+    {
+        name:  'minimalista', description: 'Minimalista – Menos é mais. O estilo minimalista cria um ambiente limpo, moderno e funcional. Indo além da arquitetura, é reconhecido também como um estilo de vida que preza pela funcionalidade e diminuição do consumismo e excessos. Os ambientes minimalistas são projetados com linhas retas e formas geométricas simples, com o mínimo de objetos possíveis em um mesmo ambiente. Neste estilo predominam paredes em cores claras, iluminação natural, grandes planos de vidro e objetos discretos, como quadros em preto, branco e cores neutras. Além disso, peças metálicas ou amadeiradas podem ser usadas pontualmente como forma de destaque.'
+    }, 
+]
 
+const movimentMap = new Map( moviment.map( i => [i.name, i.description]));
+const stepsMap1 = new Map(steps1.map(i => [i.current, i.next]));
 const stepsMap2 = new Map(steps2.map(i => [i.current, i.next]));
 
 const flowMap = new Map([['budget', stepsMap1], ['style', stepsMap2]]);
@@ -216,7 +229,7 @@ function nextSection(nextSectionID, ...props) {
 
     if (nextSectionID === 'initial') clearForms();
 
-    changeTitle(currentSection);
+    changeSubtitle(currentSection);
 
     const [isComingBack] = props;
     if (! isComingBack === true) {
@@ -234,14 +247,64 @@ function nextSection(nextSectionID, ...props) {
         old: "section--inactive",
         new: "section--active"
     });
-    
+    $(window).scrollTop(0);
+
     if (previous.getAttribute("data-submit") === "true") {
         const formId = '1'
         formData = clearData(formId);
         sendEmail(formData);
     }
+
+    if (nextSectionID === 'styleResult') setInformationStyleResult()
 }
 
+function setInformationStyleResult() {
+    let name = getMostSelectedField()
+    let section = document.getElementById('styleResult');
+    
+    section.querySelector('#resultTitle').innerText = `Estilo ${name}`;
+    section.querySelector('#movimentDescription').innerText = movimentMap.get(name.toLowerCase());
+
+    let form = document.getElementById('artisticMovements');
+    let imgs = Array.from( form.querySelectorAll(`.${name}-img`) );
+
+    let galleryImages = Array.from( document.querySelectorAll('#styleResult img.gallery__photo') );
+
+    document.getElementById('resultCover').setAttribute('src', imgs[0].getAttribute("src"))
+    
+    changeSubtitle(section, `O seu estilo é o: ${name}`)
+
+    imgs.forEach((el, i) => {
+        galleryImages[i].setAttribute('src', el.getAttribute("src"));
+    })
+    // console.log(imgs)
+
+}
+
+function getMostSelectedField() {
+    let form = document.getElementById('artisticMovements');
+    form = Array.from(form.querySelectorAll('input[name="movement"]:checked'));
+
+    let fields = form.reduce((acc, e) => {
+        if (e.value in acc) {
+            acc[e.value] = acc[e.value] + 1;
+        } else {
+            acc[e.value] = 1;
+        }
+        return acc
+    }, {})
+
+    let mostSelectedField = {name: '', value: 0}
+
+    for (const [name, value] of Object.entries(fields)) {
+        if (value > mostSelectedField.value) {
+            mostSelectedField.name = name;
+            mostSelectedField.value = value;
+        }
+    }
+
+    return mostSelectedField.name;
+}
 
 function changeState(section, state) {
     if (section.classList.contains(state.old)) {
@@ -425,7 +488,12 @@ function checkActionsVisibility(section) {
 }
 
 
-function changeTitle(section) {
+function changeSubtitle(section, ...titles) {
     let title = section.getAttribute('data-title') || initialSubtitle;
+
+    if (titles[0]) {
+        title = titles[0]
+    }
+
     document.querySelector('.header__subtitle').innerText = title;
 }
