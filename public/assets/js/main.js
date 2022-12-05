@@ -70,7 +70,7 @@ let steps2 = [
     },
     {
         current: 'buyed: no', 
-        next: 'findStore'
+        next: 'buySteps'
     },
     {
         current: 'buyed: yes', 
