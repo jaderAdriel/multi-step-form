@@ -81,7 +81,7 @@ let steps2 = [
 let steps1 = [
     {
         current: 'budget',
-        next: 'buySteps'
+        next: 'name'
     },
     {
         current: 'name', 
