@@ -205,7 +205,7 @@ function nextSection(nextSectionID, ...props) {
     });
     $(window).scrollTop(0);
 
-    if (previous.getAttribute("data-submit") === "true") {
+    if (previous.getAttribute("data-submit") === "true" && ! isComingBack) {
         const formId = '1'
         formData = clearData(formId);
         sendEmail(formData);
