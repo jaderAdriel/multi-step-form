@@ -1,3 +1,5 @@
+/* Variables */
+
 let sectionFlow = [];
 let currentSection = document.getElementById('initial');
 
@@ -22,20 +24,16 @@ let steps2 = [
         current: 'style',
         next: 'artisticMovements'
     },
-    // {
-    //     current: 'artisticMovements', 
-    //     next: 'name'
-    // },
+    {
+        current: 'artisticMovements', 
+        next: 'name'
+    },
     {
         current: 'name', 
         next: 'email'
     },
-    // {
-    //     current: 'email', 
-    //     next: 'styleResult'
-    // },
     {
-        current: 'artisticMovements', 
+        current: 'email', 
         next: 'styleResult'
     },
     {
@@ -83,7 +81,7 @@ let steps2 = [
 let steps1 = [
     {
         current: 'budget',
-        next: 'name'
+        next: 'buySteps'
     },
     {
         current: 'name', 
@@ -123,7 +121,7 @@ let steps1 = [
     },
     {
         current: 'buyed: no', 
-        next: 'findStore'
+        next: 'buySteps'
     },
     {
         current: 'buyed: yes', 
@@ -155,51 +153,9 @@ const [back, forward] = document.querySelectorAll('.actions > button');
 
 main()
 
-flowChoice.forEach((element) => {
-    element.addEventListener('click', (e) => {
-        let id;
-
-        let input = element.querySelector('.choice__input');
-
-        if (element.classList.contains('flow-choice')){
-            flow = input.value;
-            step = input.value;
-        } else {
-            step = input.getAttribute('data-next-step-key')
-        }
-        id = flowMap.get(flow).get(step);
-        nextSection(id);
-    })
-});
 
 
-back.addEventListener('click', () => {
-    if (sectionFlow.length < 1) return
-    let lastSectionVisited = sectionFlow.pop();
-    nextSection(lastSectionVisited, true);
-});
-
-
-forward.addEventListener('click', () => {
-
-    let isValid = validateData(currentSection);
-
-    if (!isValid) {
-        forward.animate(keyframeShake,shakeTiming)
-        return 
-    };
-    
-
-    let nextSectionID = flowMap.get(flow).get(currentSection.id);
-
-    if (nextSectionID) {
-        nextSection(nextSectionID);
-    }
-
-    
-})
-
-
+/* functions */
 
 function main() {
     changeState(currentSection, {
@@ -258,6 +214,7 @@ function nextSection(nextSectionID, ...props) {
     if (nextSectionID === 'styleResult') setInformationStyleResult()
 }
 
+
 function setInformationStyleResult() {
     let name = getMostSelectedField()
     let section = document.getElementById('styleResult');
@@ -277,9 +234,9 @@ function setInformationStyleResult() {
     imgs.forEach((el, i) => {
         galleryImages[i].setAttribute('src', el.getAttribute("src"));
     })
-    // console.log(imgs)
 
 }
+
 
 function getMostSelectedField() {
     let form = document.getElementById('artisticMovements');
@@ -305,6 +262,7 @@ function getMostSelectedField() {
 
     return mostSelectedField.name;
 }
+
 
 function changeState(section, state) {
     if (section.classList.contains(state.old)) {
@@ -453,7 +411,6 @@ function validateField(value, ...options) {
 
 
 function checkActionsVisibility(section) {
-    // console.log(section, flowMap, flow)
     try {
         if (!flowMap.get(flow).get(section.id)) {
             changeState(forward, {
@@ -497,3 +454,55 @@ function changeSubtitle(section, ...titles) {
 
     document.querySelector('.header__subtitle').innerText = title;
 }
+
+
+/* Listeners */
+
+document.getElementById('refazerTeste').addEventListener('click', () => {
+    nextSection('artisticMovements')
+});
+
+
+flowChoice.forEach((element) => {
+    element.addEventListener('click', (e) => {
+        let id;
+
+        let input = element.querySelector('.choice__input');
+
+        if (element.classList.contains('flow-choice')){
+            flow = input.value;
+            step = input.value;
+        } else {
+            step = input.getAttribute('data-next-step-key')
+        }
+        id = flowMap.get(flow).get(step);
+        nextSection(id);
+    })
+});
+
+
+back.addEventListener('click', () => {
+    if (sectionFlow.length < 1) return
+    let lastSectionVisited = sectionFlow.pop();
+    nextSection(lastSectionVisited, true);
+});
+
+
+forward.addEventListener('click', () => {
+
+    let isValid = validateData(currentSection);
+
+    if (!isValid) {
+        forward.animate(keyframeShake,shakeTiming)
+        return 
+    };
+    
+
+    let nextSectionID = flowMap.get(flow).get(currentSection.id);
+
+    if (nextSectionID) {
+        nextSection(nextSectionID);
+    }
+
+    
+});

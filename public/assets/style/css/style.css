@@ -157,8 +157,14 @@ html, body {
   gap: 2em;
 }
 .section__title {
+  font-size: clamp(1.2rem, 1.5vw, 3rem);
+  font-weight: 700;
+  padding: 0.4em 0 0.4em 0;
+}
+.section__subtitle {
   font-size: clamp(1rem, 1.5vw, 3rem);
-  font-weight: 500;
+  font-weight: 600;
+  padding: 0.4em 0 0.4em 0;
 }
 .section--active {
   display: flex;
@@ -168,20 +174,19 @@ html, body {
 }
 .section__content {
   width: 100%;
-  height: fit-content;
 }
 .section__content__cover {
   width: 100%;
-  height: fit-content;
+  height: auto;
   display: grid;
-  grid-template-columns: minmax(min(12em, 66.666%), 1fr);
 }
 .section__content__cover__image {
   width: 100%;
   max-width: 38em;
   margin: auto;
-  height: auto;
-  object-fit: contain;
+  height: 100%;
+  max-height: 28em;
+  object-fit: cover;
 }
 .section__content__description {
   margin-top: 1em;
@@ -269,7 +274,7 @@ html, body {
 
 .options {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(14em, 48%), 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(10em, 48%), 1fr));
   gap: 0.5em;
 }
 .options--image {
@@ -479,6 +484,72 @@ html, body {
   width: 10em;
   height: 5em;
   cursor: pointer;
+}
+
+.btn--primary {
+  padding: 0.6em;
+  margin: 0.5em 0 0.5em 0;
+  color: #FFF;
+  cursor: pointer;
+  font-size: 1.2em;
+  width: fit-content;
+  text-transform: uppercase;
+  background-color: #000;
+}
+
+.step-component {
+  display: flex;
+  flex-wrap: wrap;
+  position: relative;
+}
+.step-component::before {
+  content: "";
+  position: absolute;
+  width: 2px;
+  height: 100%;
+  top: 0;
+  left: -5px;
+  background-color: #000;
+}
+.step-component .step {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 1em;
+}
+.step-component .step .left {
+  display: flex;
+  align-items: center;
+}
+.step-component .step .right {
+  display: flex;
+  padding-left: 1em;
+  max-width: 25em;
+  align-items: center;
+  gap: 1em;
+}
+.step-component .step__image {
+  object-fit: cover;
+}
+.step-component .step__title {
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  position: relative;
+  font-weight: 600;
+}
+.step-component .step__title::before {
+  content: "";
+  position: absolute;
+  width: 10px;
+  border-radius: 50%;
+  height: 10px;
+  top: calc(50% - 5px);
+  left: calc((1em + 10px) * -1);
+  background-color: #000;
+}
+.step-component .step__tag {
+  padding: 0.6em 0 0.6em 0;
+  color: gray;
 }
 
 @keyframes firework {

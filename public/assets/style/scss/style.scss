@@ -118,8 +118,15 @@ html, body {
     gap: 2em;
 
     &__title {
+        font-size: clamp(1.2rem, 1.5vw, 3rem);
+        font-weight: 700;
+        padding: 0.4em 0 0.4em 0;
+    }
+
+    &__subtitle {
         font-size: clamp(1rem, 1.5vw, 3rem);
-        font-weight: 500; 
+        font-weight: 600;
+        padding: 0.4em 0 0.4em 0;
     }
 
     &--active {
@@ -131,20 +138,19 @@ html, body {
 
     &__content {
         width: 100%;
-        height: fit-content;
         &__cover {
             width: 100%;
-            height: fit-content;
-
+            height: auto;
             display: grid;
-            grid-template-columns: minmax(min(12em, 66.666%), 1fr);
+            
 
             &__image {
                 width: 100%;
                 max-width: 38em;
                 margin: auto;
-                height: auto;
-                object-fit: contain;
+                height: 100%;
+                max-height: 28em;
+                object-fit: cover;
             
             }
         }
@@ -247,7 +253,7 @@ html, body {
 .options {
     
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(14em, 48%), 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(10em, 48%), 1fr));
     
     &--image {
         grid-template-columns: repeat(auto-fill, minmax(min(14em, 100%), 1fr));
@@ -500,6 +506,75 @@ html, body {
     cursor: pointer;
 }
 
+.btn--primary {
+    padding: 0.6em;
+    margin: 0.5em 0 0.5em 0;
+    color: #FFF;
+    cursor: pointer;
+    font-size: 1.2em;
+    width: fit-content;
+    text-transform: uppercase;
+    background-color: #000;
+}
+
+
+.step-component {
+    display: flex;
+    flex-wrap: wrap;
+    position: relative;
+    &::before {
+        content: '';
+        position: absolute;
+        width: 2px;
+        height: 100%;
+        top: 0;
+        left: -5px;
+        background-color: #000;
+    }
+    .step {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        padding: 1em;
+        .left{
+            display: flex;
+            align-items: center;
+        }
+        .right {
+            display: flex;
+            padding-left: 1em;
+            max-width: 25em;
+            align-items: center;
+            gap: 1em;
+        }
+
+        &__image {
+            object-fit: cover; 
+        }
+
+        &__title {
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            position: relative;
+            font-weight: 600;
+            &::before {
+                content: '';
+                position: absolute;
+                width: 10px;
+                border-radius: 50%;
+                height: 10px;
+                top: calc(50% - 5px);
+                left: calc((1em + 10px) * -1);
+                background-color: #000;
+            }
+        }
+
+        &__tag {
+            padding: 0.6em 0 0.6em 0;
+            color: gray;
+        }
+    }
+}
 
 @keyframes firework {
     
