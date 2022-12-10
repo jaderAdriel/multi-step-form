@@ -22,7 +22,7 @@ const shakeTiming = {
 let steps2 = [
     {
         current: 'style',
-        next: 'artisticMovements'
+        next: 'buySteps'
     },
     {
         current: 'artisticMovements', 
@@ -506,3 +506,58 @@ forward.addEventListener('click', () => {
 
     
 });
+
+/* Modals */
+
+const modals = Array.from(document.querySelectorAll('.modal'));
+
+modals.forEach((modal) => {
+    const closeControl = modal.querySelector('.modal__control');
+    
+    closeControl.addEventListener('click', () => {
+        const options = {
+            old: 'active',
+            new: 'inactive',
+        };
+        let iframe = modal.querySelector('iframe');
+
+        if ( iframe ) {
+            let url = iframe.src;
+            iframe.src = url;
+        }
+
+        changeState(modal, options);
+    })
+});
+
+
+const step__details = Array.from(document.querySelectorAll('.step__image'));
+const videoPreviewModal = document.getElementById('step-video-preview');
+
+let modalTitle = videoPreviewModal.querySelector('.title');
+let modalDescription = videoPreviewModal.querySelector('.description');
+let modalVideo = videoPreviewModal.querySelector('#video');
+let modalEtapa = videoPreviewModal.querySelector('.etapa');
+
+step__details.forEach((image) => {
+    image.addEventListener('click', (e) => {
+        let url = image.getAttribute('data-video-url');
+        let title = image.getAttribute('data-video-title');
+        let description = image.getAttribute('data-video-description');
+        let etapa = image.getAttribute('data-etapa');
+        
+        modalVideo.src = url;
+        modalTitle.innerText = title;
+        modalDescription.innerText = description;
+        modalEtapa.innerText = 'ETAPA ' + etapa; 
+
+        const options = {
+            new: 'active',
+            old: 'inactive',
+        };
+
+        changeState(videoPreviewModal, options);
+    });
+});
+
+

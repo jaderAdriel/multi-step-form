@@ -522,59 +522,139 @@ html, body {
     display: flex;
     flex-wrap: wrap;
     position: relative;
-    &::before {
-        content: '';
-        position: absolute;
-        width: 2px;
-        height: 100%;
-        top: 0;
-        left: -5px;
-        background-color: #000;
-    }
+    gap: 2.4em;
+
+    
     .step {
         display: flex;
         flex-direction: column;
-        gap: 6px;
-        padding: 1em;
-        .left{
+        width: 100%;
+        max-width: 18em;
+        gap: 0.5em;
+        
+        &__details {
             display: flex;
+            gap: 0.6em;
             align-items: center;
+
+            .info {
+                display: flex;
+                flex-direction: column;
+                gap: 0.4em;
+            }
+            p {
+                padding: 0;
+            }
         }
-        .right {
-            display: flex;
-            padding-left: 1em;
-            max-width: 25em;
-            align-items: center;
-            gap: 1em;
-        }
+        
 
         &__image {
             object-fit: cover; 
+            cursor: pointer;
         }
 
         &__title {
             letter-spacing: 0.2em;
             text-transform: uppercase;
             position: relative;
+            padding-left: 12px;
             font-weight: 600;
             &::before {
                 content: '';
                 position: absolute;
-                width: 10px;
+                width: 6px;
                 border-radius: 50%;
-                height: 10px;
-                top: calc(50% - 5px);
-                left: calc((1em + 10px) * -1);
+                height: 6px;
+                top: calc(50% - 3px);
+                left: 0;
                 background-color: #000;
             }
         }
 
         &__tag {
-            padding: 0.6em 0 0.6em 0;
+            letter-spacing: 0.1em;
+            font-size: 0.95em;
             color: gray;
         }
     }
+
+    .modal {
+        position: absolute;
+        right: 0;
+        background-color: rgb(63, 63, 63);
+        top: 40%;
+        width: 100%;
+        max-width: 35em;
+        display: flex;
+        flex-wrap: wrap;
+        color: #FFF;
+        padding: 1em;
+        justify-content: center;
+
+
+        .info {
+            width: 100%;
+            max-width: 50%;
+            padding: 0.4em;
+            display: flex;
+            flex-direction: column;
+            gap: 0.4em;
+
+            .etapa {
+                letter-spacing: 0.2em;
+                text-transform: uppercase;
+                position: relative;
+                font-weight: 600;
+            }
+            .title {
+                font-weight: 700;
+            }
+            .description {
+                margin-top: auto;
+                font-weight: 500;
+                font-size: 0.8rem;
+            }
+        }
+
+        .video {
+            width: 100%;
+            max-width: 50%;
+            padding: 0.4em;
+            iframe {
+                width: 100%;
+                height: auto;
+            }
+        }
+
+        
+    }
 }
+
+
+.modal {
+
+    &.active {
+        display: flex;
+    }
+
+    &.inactive {
+        display: none;
+    }
+
+    .modal__control {
+        cursor: pointer;
+        $width: 2em;
+        $height: 2em;
+        width: $width; height: $height;
+        position: absolute;
+        left: calc(100% - $width);
+        padding: 0.2em;
+        top: 0;
+        filter: invert(1);
+    }
+}
+
+
 
 @keyframes firework {
     
@@ -654,6 +734,26 @@ html, body {
     }
 }
 
+
+@media only screen and (max-width: 850px)  {
+    .step-component{
+        .step {
+            max-width: none;
+        }
+    }
+}
+
+@media only screen and (max-width: 470px)  {
+    .step-component{
+        .modal {
+            .video, .info{
+                width: 100%;
+                padding: 0.6em;
+                max-width: none;
+            }
+        }
+    }
+}
 
 @media only screen and (min-width: 1000px) {
     .wrapper__content {
