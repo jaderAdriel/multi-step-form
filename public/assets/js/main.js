@@ -22,7 +22,7 @@ const shakeTiming = {
 let steps2 = [
     {
         current: 'style',
-        next: 'buySteps'
+        next: 'artisticMovements'
     },
     {
         current: 'artisticMovements', 
