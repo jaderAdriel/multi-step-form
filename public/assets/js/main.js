@@ -520,7 +520,7 @@ modals.forEach((modal) => {
             new: 'inactive',
         };
         let iframe = modal.querySelector('iframe');
-
+        document.querySelector('body').style.overflow = 'auto';
         if ( iframe ) {
             let url = iframe.src;
             iframe.src = url;
@@ -561,3 +561,18 @@ step__details.forEach((image) => {
 });
 
 
+let modal = document.querySelector('#imageModal');
+
+Array.from(document.querySelectorAll('.gallery__block')).forEach(e => {
+    console.log(e)
+    e.addEventListener('click', () => {
+        const options = {
+            new: 'active',
+            old: 'inactive',
+        };
+        changeState(modal, options);
+        document.querySelector('body').style.overflow = 'hidden';
+        let imageURL = e.querySelector('.gallery__photo').getAttribute('src');
+        modal.querySelector('#image').setAttribute('src', imageURL);
+    })
+})
